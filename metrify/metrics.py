@@ -1,8 +1,8 @@
 import numpy as np
 
 
-def get_confusion_matrix(t: np.array, p: np.array) -> tuple:
-    """The get_confusion_matrix function computes the confusion matrix for a binary classification problem.
+def confusion_matrix(t: np.array, p: np.array) -> tuple:
+    """The confusion_matrix function computes the confusion matrix for a binary classification problem.
        It takes two input arrays t and p, which represent the true labels and predicted labels respectively.
        The function calculates the number of true positives (TP), true negatives (TN), false positives (FP),
        and false negatives (FN) by comparing the elements of t and p.
@@ -33,7 +33,7 @@ def informedness(t: np.array, p: np.array) -> float:
     """Compute the informedness metric for a binary classification problem."""
 
     # Compute the confusion matrix
-    TP, TN, FP, FN = get_confusion_matrix(t, p)
+    TP, TN, FP, FN = confusion_matrix(t, p)
 
     return TP / (TP + FN) - FP / (TN + FP)
 
@@ -42,7 +42,7 @@ def markedness(t: np.array, p: np.array) -> float:
     """Compute the markedness metric for a binary classification problem."""
 
     # Compute the confusion matrix
-    TP, TN, FP, FN = get_confusion_matrix(t, p)
+    TP, TN, FP, FN = confusion_matrix(t, p)
 
     return TP / (TP + FP) - FN / (TN + FN)
 
