@@ -41,7 +41,7 @@ phi_2 = phi_beta(t, p, beta=2)
 
 ### $F_\beta$
 
-Given a set of binary ground truths and predictions as probabilities, find the best $F_beta$ and corresponding threshold:
+Given a set of binary ground truths and predictions as probabilities, find the best $F_\beta$ and corresponding threshold:
 ```
 from metrify import find_best_fbeta
 
