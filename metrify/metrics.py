@@ -1,4 +1,7 @@
+from typing import Tuple
+
 import numpy as np
+from sklearn.metrics import precision_recall_curve
 
 
 def confusion_matrix(t: np.array, p: np.array) -> tuple:
@@ -61,3 +64,19 @@ def phi(t: np.array, p: np.array) -> float:
     of phi_bea metric for a binary classification problem."""
 
     return phi_beta(t, p, 1)
+
+
+def find_best_fbeta(t: np.array, p: np.array, beta: float) -> Tuple[float, float]:
+    """
+    Given a binary ground truth t and a set of predictions p (these are probabilities)
+    and a value for beta, return the best fbeta score and the corresponding threshold
+    """
+
+    # Get precisions, recalls and thresholds (shape for each of these (N, ))
+    precisions, recalls, thresholds = precision_recall_curve(t, p)
+
+    # Compute all the fbeta scores
+    fbetas = (1 + beta**2) * (precisions * recalls) / (beta**2 * precisions + recalls)
+
+    # Return the best fbeta score and the corresponding threshold
+    return fbetas.max(), thresholds[fbetas.argmax()]

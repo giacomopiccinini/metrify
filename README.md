@@ -6,7 +6,7 @@ To install *metrify*, simply run `pip install metrify`.
 
 ## Purpose
 
-The purpose of *metrify* is to add a few simple functionalities to scikit-learn. In particular, the **informedness**, **markedness** and **$\phi_\beta$** scores are introduced. The reason for introducing them (and hence their utility) stems from the following observations.
+The purpose of *metrify* is to add a few simple functionalities to scikit-learn. In particular, the **informedness**, **markedness** and **$\phi_\beta$** scores are introduced. Furthermore, some other utilities related to more traditional metrics (e.g. $F_\beta$) are introduced, too. The reason for introducing them (and hence their utility) stems from the following observations.
 
 The main issue with precision, recall and F-score is that none of them makes use of *True Negatives* (*TN*s) to assess the model performance. Whilst we are usually interested in the positive class, ensuring to get the negative class right is a sort of sanity check for our model. For example, if we had a highly imbalanced dataset (towards the negative class) we definitely want the negative class to be predicted with high confidence. Our job should be, in theory, to ensure that the model performs well on the minority, i.e. the positive, class.
 
@@ -20,6 +20,8 @@ Markedness plays the role of precision, and is informative about the role of $FP
 $$\phi_\beta = (1 + \beta^2) \frac{I \cdot M}{\beta^2 M + I}$$
 
 ## Usage
+
+### Informedness, Markedness, $\phi$
 
 Currently *metrify* only works for a binary classification problem. A sample usage is the following
 ```
@@ -35,6 +37,22 @@ p = np.random.randint(0, 2, 100)
 i = informedness(t, p)
 m = markedness(t, p)
 phi_2 = phi_beta(t, p, beta=2)
+```
+
+### $F_\beta$
+
+Given a set of binary ground truths and predictions as probabilities, find the best $F_beta$ and corresponding threshold:
+```
+from metrify import find_best_fbeta
+
+# Define a random numpy array of 100 true values
+t = np.random.randint(0, 2, 100)
+
+# Define a random numpy array of 100 predicted probabilities
+p = np.random.rand(100)
+
+# Get the best F0.5 and the corresponding threshold
+f_beta, threshold = find_best_fbeta(t, p, beta=0.5)
 ```
 
 ## New Versions
