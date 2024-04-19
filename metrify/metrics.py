@@ -78,5 +78,9 @@ def find_best_fbeta(t: np.array, p: np.array, beta: float) -> Tuple[float, float
     # Compute all the fbeta scores
     fbetas = (1 + beta**2) * (precisions * recalls) / (beta**2 * precisions + recalls)
 
+    # Find the highest beta score and its position *exlcuding nans*
+    max_fbeta = np.nanmax(fbetas)
+    position = np.nanargmax(fbetas)
+
     # Return the best fbeta score and the corresponding threshold
-    return fbetas.max(), thresholds[fbetas.argmax()]
+    return max_fbeta, thresholds[position]
